@@ -7,6 +7,7 @@ import HomeImage from '../../assets/img/background.jpg';
 import { Helmet } from 'react-helmet';
 import Boardroom from './components/Boardroom';
 import BombFarms from './components/BombFarms';
+import Bonds from './components/Bonds';
 
 
 const BackgroundImage = createGlobalStyle`
@@ -33,6 +34,7 @@ const Dashboard = () => {
           <Summary/>
           <Boardroom/>
           <BombFarms/>
+          <Bonds/>
       </Route>
             
             

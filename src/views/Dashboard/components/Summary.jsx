@@ -12,11 +12,11 @@ import ProgressCountdown from './ProgressCountdown';
 import moment from 'moment';
 import useTreasuryAllocationTimes from '../../../hooks/useTreasuryAllocationTimes';
 import CountUp from 'react-countup';
-
+import useCashPriceInEstimatedTWAP from '../../../hooks/useCashPriceInEstimatedTWAP';
 
 
 const card = {
-    backdropFilter: 'blur(16px) saturate(180%)',
+    backdropFilter: 'blur(2px) saturate(180%)',
     backgroundColor: 'rgba(35, 40, 75, 0.75)',
     borderRadius: '12px',
     border: '1px solid rgba(114, 140, 223, 1)',
@@ -34,6 +34,8 @@ const Summary = () => {
     const currentEpoch = useCurrentEpoch();
     const { to } = useTreasuryAllocationTimes();
     const TVL = useTotalValueLocked();
+    const cashStat = useCashPriceInEstimatedTWAP();
+    const scalingFactor = useMemo(() => (cashStat ? Number(cashStat.priceInDollars).toFixed(4) : null), [cashStat]);
 
     const bombPriceInDollars = useMemo(
         () => (bombStats ? Number(bombStats.priceInDollars).toFixed(2) : null),
@@ -106,6 +108,8 @@ const Summary = () => {
                     Epoch={Number(currentEpoch)}
                     nextEpoch={<ProgressCountdown base={moment().toDate()} hideBar={true} deadline={to} description="Next Epoch" />}
                     TVL={<CountUp end={TVL} separator="," prefix="$" />}
+                    liveTwap={scalingFactor}
+                    lastEpoch={scalingFactor}
                     />
                 </div>
             </div>

@@ -2,9 +2,11 @@ import React from 'react'
 import { Button } from '@material-ui/core';
 import BtcCard from './btcCard'
 import TokenSymbol from '../../../components/TokenSymbol';
+// import useTotalStakedOnBoardroom from '../../hooks/useTotalStakedOnBoardroom';
+// import useStakedBalanceOnBoardroom from '../../hooks/useStakedBalanceOnBoardroom';
 
 const card = {
-    backdropFilter: 'blur(16px) saturate(180%)',
+    backdropFilter: 'blur(2px) saturate(180%)',
         backgroundColor: 'rgba(35, 40, 75, 0.75)',
         borderRadius: '12px',
         border: '1px solid rgba(114, 140, 223, 1)',
@@ -14,6 +16,8 @@ const card = {
 }
 
 const BombFarms = () => {
+    // const stakedBalance = useStakedBalanceOnBoardroom();
+
     return (
 
         <div style={card}>
@@ -28,11 +32,13 @@ const BombFarms = () => {
             </div>
             <BtcCard
                     title="BOMB-BTCB"
-                    icon={<TokenSymbol symbol="BOMB" size="50" />}    
+                    icon={<TokenSymbol symbol="BOMB-BTCB-LP" size="50" />}    
                     TVL=" $1008"
                     dailyReturn="2"
-                    yourStake=" 6.0000"
+                    yourStake=" 6.0000 "
+                    stakeIcon={<TokenSymbol symbol="BOMB-BTCB-LP" size="20" />}
                     Earned=" 1660.44" 
+                    earnedIcon={<TokenSymbol symbol="BSHARE" size="20" />}
                     align="center"
                     stakeDisp="none"
                     btnwrap="nowrap"
@@ -43,11 +49,13 @@ const BombFarms = () => {
                     />
             <BtcCard
                     title="BSHARE-BNB"
-                    icon={<TokenSymbol symbol="BOMB" size="50" />}    
+                    icon={<TokenSymbol symbol="BSHARE-BNB-LP" size="50" />}    
                     TVL=" $1008"
                     dailyReturn="2"
-                    yourStake=" 6.0000"
+                    yourStake=" 6.0000 "
+                    stakeIcon={<TokenSymbol symbol="BSHARE-BNB-LP" size="20" />}
                     Earned=" 1660.44" 
+                    earnedIcon={<TokenSymbol symbol="BSHARE" size="20" />}
                     align="center"
                     stakeDisp="none"
                     btnwrap="nowrap"

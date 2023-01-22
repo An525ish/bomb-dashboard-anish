@@ -14,7 +14,7 @@ const Epoch = (props) => {
             <div style={{ display:"flex", flexDirection : "column", width: "max-content", padding:'.5rem', lineHeight : '1.5'}}>
                 <span>Live TWAP: <span style={{color : "rgba(0, 232, 162, 1)"}}>{props.liveTwap}</span></span>
                 <span>TVL: <span style={{color : "rgba(0, 232, 162, 1)"}}>{props.TVL}</span></span>
-                <span>Last Epoch TWAP: <span style={{color : "rgba(0, 232, 162, 1)"}}>{props.LastEpoch}</span></span>
+                <span>Last Epoch TWAP: <span style={{color : "rgba(0, 232, 162, 1)"}}>{props.lastEpoch}</span></span>
             </div>
         </div>
     )

@@ -2,10 +2,14 @@ import { Button } from '@material-ui/core'
 import React from 'react'
 import BtcCard from './btcCard'
 import TokenSymbol from '../../../components/TokenSymbol';
+// import useStakedBalanceOnBoardroom from '../../../hooks/useStakedBalanceOnBoardroom';
+import useTotalStakedOnBoardroom from '../../../hooks/useTotalStakedOnBoardroom';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+
 
 const card = {
     upper: {
-        backdropFilter: 'blur(16px) saturate(180%)',
+        backdropFilter: 'blur(2px) saturate(180%)',
         backgroundColor: 'rgba(35, 40, 75, 0.75)',
         borderRadius: '12px',
         border: '1px solid rgba(114, 140, 223, 1)',
@@ -14,7 +18,7 @@ const card = {
         flex: '2'
     },
     lower: {
-        backdropFilter: 'blur(16px) saturate(180%)',
+        backdropFilter: 'blur(2px) saturate(180%)',
         backgroundColor: 'rgba(35, 40, 75, 0.75)',
         borderRadius: '12px',
         border: '1px solid rgba(114, 140, 223, 1)',
@@ -25,6 +29,9 @@ const card = {
 }
 
 const Boardroom = () => {
+    // const stakedBalance = useStakedBalanceOnBoardroom();
+    const totalStaked = useTotalStakedOnBoardroom();
+
     return (
         <div style={{ display: 'flex', gap: '2rem', marginTop:'2rem', flexWrap:'wrap', justifyContent:'center' }}>
             <div>
@@ -45,10 +52,12 @@ const Boardroom = () => {
                     icon={<TokenSymbol symbol="BSHARE" size="50" />}    
                     subHead="Stake BSHARE and earn BOMB every epoch"
                     TVL=" $1008"
-                    staked=" 7232"
+                    staked={Number(getDisplayBalance(totalStaked)).toFixed(2)}
                     dailyReturn="2"
-                    yourStake=" 6.0000"
+                    yourStake=" 6.0000 "
+                    stakeIcon={<TokenSymbol symbol="BSHARE" size="20" />}
                     Earned=" 1660.44"
+                    earnedIcon ={<TokenSymbol symbol="BOMB" size="20" />}
                     align="end"
                     btnwrap="wrap"
                     width="13rem"
