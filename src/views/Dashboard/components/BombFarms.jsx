@@ -2,8 +2,8 @@ import React from 'react'
 import { Button } from '@material-ui/core';
 import BtcCard from './btcCard'
 import TokenSymbol from '../../../components/TokenSymbol';
-// import useTotalStakedOnBoardroom from '../../hooks/useTotalStakedOnBoardroom';
-// import useStakedBalanceOnBoardroom from '../../hooks/useStakedBalanceOnBoardroom';
+import useTotalValueLocked from '../../../hooks/useTotalValueLocked';
+import CountUp from 'react-countup';
 
 const card = {
     backdropFilter: 'blur(2px) saturate(180%)',
@@ -17,7 +17,7 @@ const card = {
 
 const BombFarms = () => {
     // const stakedBalance = useStakedBalanceOnBoardroom();
-
+    const TVL = useTotalValueLocked();
     return (
 
         <div style={card}>
@@ -33,7 +33,7 @@ const BombFarms = () => {
             <BtcCard
                     title="BOMB-BTCB"
                     icon={<TokenSymbol symbol="BOMB-BTCB-LP" size="50" />}    
-                    TVL=" $1008"
+                    TVL={<CountUp style={{ fontSize: '20px' }} end={TVL} separator="," prefix="$" />}
                     dailyReturn="2"
                     yourStake=" 6.0000 "
                     stakeIcon={<TokenSymbol symbol="BOMB-BTCB-LP" size="20" />}
@@ -50,7 +50,7 @@ const BombFarms = () => {
             <BtcCard
                     title="BSHARE-BNB"
                     icon={<TokenSymbol symbol="BSHARE-BNB-LP" size="50" />}    
-                    TVL=" $1008"
+                    TVL={<CountUp style={{ fontSize: '20px' }} end={TVL} separator="," prefix="$" />}
                     dailyReturn="2"
                     yourStake=" 6.0000 "
                     stakeIcon={<TokenSymbol symbol="BSHARE-BNB-LP" size="20" />}

@@ -6,7 +6,7 @@ const Supplies = (props) => {
             <span style={{ display: "flex", gap: ".5rem", color: "white", width : "6rem" }}> <span style={{ height: "1.2rem", width: "1.2rem", backgroundColor: "rgba(55, 55, 71, .8)", borderRadius: "2rem", textAlign: "center", padding: "2.5px" }}>{props.icon} </span><span>{props.title}</span></span>
             <span style={{width : "4rem"}}> {props.currentSupply}</span>
             <span style={{width : "3rem"}}> {props.totalSupply}</span>
-            <span style={{ display: "flex", flexDirection: "Column", alignItems: "center" }}> ${props.price} <span>1.05 BTCB</span> </span>
+            <span style={{ display: "flex", flexDirection: "Column", alignItems: "center" }}> ${props.price} <span>{props.priceInBtc} BTC</span> </span>
             <span>
                 <img src={MetamaskFox} alt="" />
             </span>

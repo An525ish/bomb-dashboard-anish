@@ -1,10 +1,14 @@
 import { Button } from '@material-ui/core'
-import React from 'react'
+import React , {useMemo} from 'react'
 import BtcCard from './btcCard'
 import TokenSymbol from '../../../components/TokenSymbol';
-// import useStakedBalanceOnBoardroom from '../../../hooks/useStakedBalanceOnBoardroom';
 import useTotalStakedOnBoardroom from '../../../hooks/useTotalStakedOnBoardroom';
 import { getDisplayBalance } from '../../../utils/formatBalance';
+import CountUp from 'react-countup';
+import useTotalValueLocked from '../../../hooks/useTotalValueLocked';
+import useEarningsOnBoardroom from '../../../hooks/useEarningsOnBoardroom';
+import useStakedBalanceOnBoardroom from '../../../hooks/useStakedBalanceOnBoardroom';
+import useBombStats from '../../../hooks/useBombStats';
 
 
 const card = {
@@ -31,37 +35,61 @@ const card = {
 const Boardroom = () => {
     // const stakedBalance = useStakedBalanceOnBoardroom();
     const totalStaked = useTotalStakedOnBoardroom();
+    const TVL = useTotalValueLocked();
+    const stakedBalance = useStakedBalanceOnBoardroom();
+    const bombStats = useBombStats();
+    const tokenPriceInDollars = useMemo(
+        () => (bombStats ? Number(bombStats.priceInDollars).toFixed(2) : null),
+        [bombStats],
+      );
+    const earnings = useEarningsOnBoardroom();
+    const earnedInDollars = (Number(tokenPriceInDollars) * Number(getDisplayBalance(earnings))).toFixed(2);
 
     return (
-        <div style={{ display: 'flex', gap: '2rem', marginTop:'2rem', flexWrap:'wrap', justifyContent:'center' }}>
+        <div style={{ display: 'flex', gap: '2rem', marginTop: '2rem', flexWrap: 'wrap', justifyContent: 'center' }}>
             <div>
                 <div>
-                    <div style={{textAlign:'right'}}>
-                        <span><a href="https://docs.bomb.money/welcome-start-here/readme" style={{color:'rgba(158, 230, 255, 1)'}}>Read Investment Strategy</a></span>
+                    <div style={{ textAlign: 'right' }}>
+                        <span><a href="https://docs.bomb.money/welcome-start-here/readme" style={{ color: 'rgba(158, 230, 255, 1)' }}>Read Investment Strategy</a></span>
                     </div>
                     <Button
                         variant='text' style={{ backgroundColor: 'rgba(0, 173, 232, 0.8)', color: 'black', width: '100%', margin: '.5rem 0', fontWeight: '600', textTransform: 'capitalize', fontSize: '1.1rem' }}> Invest Now </Button>
-                    <div style={{ display: 'flex', gap: '1rem', marginBottom:'1rem' }}>
-                        <Button variant='text' style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', color: 'black', width: '50%', fontWeight: '600', textTransform: 'capitalize', fontSize: '1.1rem' }}> Chat on Discord </Button>
-                        <Button variant='text' style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', color: 'black', width: '50%', fontWeight: '600', textTransform: 'capitalize', fontSize: '1.1rem' }}> Read Docs </Button>
+                    <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+                        <Button variant='text' style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', color: 'black', width: '50%', fontWeight: '600', textTransform: 'capitalize', fontSize: '1.1rem' }}>
+                            <a
+                                href="http://discord.bomb.money/"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                style={{ textDecoration: 'none', color: '#FFFFFF' }}
+                            >
+                            Chat on Discord</a> </Button>
+                        <Button variant='text' style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', color: 'black', width: '50%', fontWeight: '600', textTransform: 'capitalize', fontSize: '1.1rem' }}> <a
+                                href="https://docs.bomb.money/welcome-start-here/readme"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                style={{ textDecoration: 'none', color: '#FFFFFF' }}
+                            >
+                            Read Docs</a> </Button>
                     </div>
                 </div>
                 <div style={card.upper}>
                     <BtcCard
-                    title="Boardroom"
-                    icon={<TokenSymbol symbol="BSHARE" size="50" />}    
-                    subHead="Stake BSHARE and earn BOMB every epoch"
-                    TVL=" $1008"
-                    staked={Number(getDisplayBalance(totalStaked)).toFixed(2)}
-                    dailyReturn="2"
-                    yourStake=" 6.0000 "
-                    stakeIcon={<TokenSymbol symbol="BSHARE" size="20" />}
-                    Earned=" 1660.44"
-                    earnedIcon ={<TokenSymbol symbol="BOMB" size="20" />}
-                    align="end"
-                    btnwrap="wrap"
-                    width="13rem"
-                     />
+                        title="Boardroom"
+                        icon={<TokenSymbol symbol="BSHARE" size="50" />}
+                        subHead="Stake BSHARE and earn BOMB every epoch"
+                        TVL= {<CountUp style={{ fontSize: '20px' }} end={TVL} separator="," prefix="$" />}
+                        staked={Number(getDisplayBalance(totalStaked)).toFixed(2)}
+                        dailyReturn="2"
+                        yourStake={getDisplayBalance(stakedBalance)}
+                        stakeInDollars={tokenPriceInDollars}
+                        stakeIcon={<TokenSymbol symbol="BSHARE" size="20" />}
+                        Earned={getDisplayBalance(earnings)}
+                        earningInDollars={earnedInDollars}
+                        earnedIcon={<TokenSymbol symbol="BOMB" size="20" />}
+                        align="end"
+                        btnwrap="wrap"
+                        width="13rem"
+                    />
                 </div>
             </div>
             <div style={card.lower}>

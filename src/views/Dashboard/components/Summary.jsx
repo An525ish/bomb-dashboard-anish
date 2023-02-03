@@ -13,7 +13,7 @@ import moment from 'moment';
 import useTreasuryAllocationTimes from '../../../hooks/useTreasuryAllocationTimes';
 import CountUp from 'react-countup';
 import useCashPriceInEstimatedTWAP from '../../../hooks/useCashPriceInEstimatedTWAP';
-
+import useCashPriceInLastTWAP from '../../../hooks/useCashPriceInLastTWAP';
 
 const card = {
     backdropFilter: 'blur(2px) saturate(180%)',
@@ -41,9 +41,14 @@ const Summary = () => {
         () => (bombStats ? Number(bombStats.priceInDollars).toFixed(2) : null),
         [bombStats],
     );
+    const bombPriceInBNB = useMemo(() => (bombStats ? Number(bombStats.tokenInFtm).toFixed(4) : null), [bombStats]);
 
     const bSharePriceInDollars = useMemo(
         () => (bShareStats ? Number(bShareStats.priceInDollars).toFixed(2) : null),
+        [bShareStats],
+      );
+      const bSharePriceInBNB = useMemo(
+        () => (bShareStats ? Number(bShareStats.tokenInFtm).toFixed(4) : null),
         [bShareStats],
       );
 
@@ -51,7 +56,7 @@ const Summary = () => {
         () => (tBondStats ? Number(tBondStats.priceInDollars).toFixed(2) : null),
         [tBondStats],
       );
-
+      const tBondPriceInBNB = useMemo(() => (tBondStats ? Number(tBondStats.tokenInFtm).toFixed(4) : null), [tBondStats]);
       
 
   const bombCirculatingSupply = useMemo(() => (bombStats ? String(bombStats.circulatingSupply) : null), [bombStats]);
@@ -71,6 +76,8 @@ const Summary = () => {
 
   const tBondTotalSupply = useMemo(() => (tBondStats ? String(tBondStats.totalSupply) : null), [tBondStats]);
 
+  const cashPrice = useCashPriceInLastTWAP();
+  const bondScale = (Number(cashPrice) / 100000000000000).toFixed(4);
     return (
         <div style={card}>
             <h2 style={{ color: 'white !important', textAlign: 'center', padding: '1rem', fontSize: '1.2rem', fontWeight: '400', textTransform: 'capitalize',borderBottom: "solid 1px rgba(195, 197, 203, 0.75)", marginBottom:'1rem' }}> Bomb Finance Summary</h2>
@@ -87,6 +94,7 @@ const Summary = () => {
                         currentSupply={Intl.NumberFormat(language, {notation: "compact"}).format(bombCirculatingSupply)}
                         totalSupply={Intl.NumberFormat(language, {notation: "compact"}).format(bombTotalSupply)}
                         price={bombPriceInDollars ? roundAndFormatNumber(bombPriceInDollars, 2) : '-.--'}
+                        priceInBtc={bombPriceInBNB ? bombPriceInBNB : '-.----'}
                     />
                     <Supplies
                         icon={<TokenSymbol symbol="BSHARE" size="20" />}
@@ -94,6 +102,7 @@ const Summary = () => {
                         currentSupply={Intl.NumberFormat(language, {notation: "compact"}).format(bShareCirculatingSupply)}
                         totalSupply={Intl.NumberFormat(language, {notation: "compact"}).format(bShareTotalSupply)}
                         price={bSharePriceInDollars ? bSharePriceInDollars : '-.--'}
+                        priceInBtc={bSharePriceInBNB ? bSharePriceInBNB : '-.----'}
                     />
                     <Supplies
                         icon={<TokenSymbol symbol="BBOND" size="20" />}
@@ -101,6 +110,7 @@ const Summary = () => {
                         currentSupply={Intl.NumberFormat(language, {notation: "compact"}).format(tBondCirculatingSupply)}
                         totalSupply={Intl.NumberFormat(language, {notation: "compact"}).format(tBondTotalSupply)}
                         price={tBondPriceInDollars ? tBondPriceInDollars : '-.--'}
+                        priceInBtc={tBondPriceInBNB ? tBondPriceInBNB : '-.----'}
                     />
                 </div>
                 <div>
@@ -109,7 +119,7 @@ const Summary = () => {
                     nextEpoch={<ProgressCountdown base={moment().toDate()} hideBar={true} deadline={to} description="Next Epoch" />}
                     TVL={<CountUp end={TVL} separator="," prefix="$" />}
                     liveTwap={scalingFactor}
-                    lastEpoch={scalingFactor}
+                    lastEpoch={bondScale || '-'}
                     />
                 </div>
             </div>

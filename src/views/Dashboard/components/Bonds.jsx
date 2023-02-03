@@ -2,6 +2,10 @@ import React, { useMemo } from 'react';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { Button } from '@material-ui/core';
 import useBondStats from '../../../hooks/useBondStats';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import useTokenBalance from '../../../hooks/useTokenBalance';
+import useBombFinance from '../../../hooks/useBombFinance';
+
 
 const card = {
     backdropFilter: 'blur(2px) saturate(180%)',
@@ -16,7 +20,8 @@ const card = {
 const Bonds = (props) => {
   const tBondStats = useBondStats();
   const tBondPriceInBNB = useMemo(() => (tBondStats ? Number(tBondStats.tokenInFtm).toFixed(4) : null), [tBondStats]);
-
+  const bombFinance = useBombFinance();
+  const bondBalance = useTokenBalance(bombFinance?.BBOND);
 
     return (
         <div style={card}>
@@ -31,12 +36,12 @@ const Bonds = (props) => {
                 <div style={{display:'flex', gap:'7rem', flex:'3', marginTop:'1.5rem'}}>
                     <div style={{display:'flex', flexDirection:'column', gap:'.8rem'}}>
                         <span style={{color:'rgba(195, 197, 203, 1)'}}>Current Price: (Bomb)^2</span>
-                        <span style={{fontSize:'1.3rem'}}>BBond = {tBondPriceInBNB ? tBondPriceInBNB : '-.----'}</span>
+                        <span style={{fontSize:'1.3rem'}}>BBond = {tBondPriceInBNB ? tBondPriceInBNB : '-.----'} BTCB</span>
                     </div>
                     <div style={{display:'flex', flexDirection:'column', gap:'.4rem', textAlign:'center'}}>
                         <span>Available to redeem: </span>
                         <span style={{fontSize:'1.7rem',display:'flex', justifyContent:'center'}}>
-                          <span><TokenSymbol symbol="BBOND" size="40" /></span><span style={{alignSelf:'center'}}>456</span> </span>
+                          <span><TokenSymbol symbol="BBOND" size="40" /></span><span style={{alignSelf:'center'}}>{getDisplayBalance(bondBalance)}</span> </span>
                     </div>
                 </div>
                 <div style={{display:'flex', flexDirection:'column', gap:'1rem', flex:'2'}}>

@@ -27,13 +27,13 @@ const btcCard = (props) => {
                 <span style={{ width: '8rem' }}>Daily returns : <span style={{fontSize:'1.3rem'}}>{props.dailyReturn}%</span></span>
                 <span style={{ width: '8rem' }}>Your Stake :<br/>
                  {props.stakeIcon}{props.yourStake} <br/>
-                    ≈ $1171.62
+                    ≈ ${props.stakeInDollars}
                 </span>
                 <span style={{ width: '8rem' }}>
                     Earned: <br/>
                     {props.earnedIcon}
                     {props.Earned} <br/>
-                    ≈ $298.88
+                    ≈ ${props.earningInDollars}
                 </span>
                 <div style={{
                     display: 'flex',
